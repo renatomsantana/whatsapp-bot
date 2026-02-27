@@ -1,0 +1,72 @@
+# 🤖 WhatsApp AI Chatbot
+
+Chatbot inteligente para WhatsApp com GPT-4, agendamento automático de cupons e histórico de clientes.
+
+## ✨ Funcionalidades
+
+- **Respostas com IA** via GPT-4o-mini — o bot entende linguagem natural e responde sobre o negócio
+- **Histórico de conversa** — o bot lembra o contexto da conversa
+- **Cupons automáticos** — envia descontos para clientes inativos após 14, 30 e 60 dias
+- **Configurável** — basta editar `config.py` para adaptar a qualquer negócio
+- **Dockerizado** — fácil de subir em qualquer servidor
+
+## 🛠️ Stack
+
+- Python 3.11
+- Flask (webhook)
+- OpenAI GPT-4o-mini
+- Twilio WhatsApp API
+- Schedule (jobs automáticos)
+- Docker
+
+## 🚀 Como rodar
+
+### 1. Clone o repositório
+```bash
+git clone https://github.com/renatomsantana/whatsapp-bot
+cd whatsapp-bot
+```
+
+### 2. Configure as variáveis de ambiente
+```bash
+cp .env.example .env
+# edite o .env com suas credenciais
+```
+
+### 3. Rode com Docker
+```bash
+docker build -t whatsapp-bot .
+docker run -p 5000:5000 --env-file .env whatsapp-bot
+```
+
+### 4. Exponha o webhook com ngrok (para testar localmente)
+```bash
+ngrok http 5000
+# copie a URL gerada e cole no Twilio como webhook
+```
+
+## ⚙️ Configuração do negócio
+
+Edite `config.py` para adaptar ao seu negócio:
+
+```python
+BUSINESS_CONFIG = {
+    "name": "Seu Negócio",
+    "description": "Descrição do negócio",
+    "hours": "horário de funcionamento",
+    ...
+}
+```
+
+## 📁 Estrutura
+
+```
+whatsapp-bot/
+├── main.py          # webhook Flask
+├── bot.py           # lógica GPT
+├── scheduler.py     # cupons automáticos
+├── database.py      # gerencia clientes
+├── config.py        # configuração do negócio
+├── Dockerfile
+└── requirements.txt
+```
